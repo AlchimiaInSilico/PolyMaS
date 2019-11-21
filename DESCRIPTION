@@ -1,0 +1,17 @@
+Package: PolyMaS
+Type: Package
+Date: 2019-11-15
+Title: Polymer Maker Smiles-based
+Version: 0.1.0
+Author: ALIS <alchimiainsilico@gmail.com>
+Maintainer: ALIS <alchimiainsilico@gmail.com>
+Description: This package performs the computational polymerization 
+    of linear molecules from their structural repetitive units 
+	by using Simplified Molecular Input Line Entry Specification (SMILES).
+Imports:
+	foreach,
+	doParallel
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.0
