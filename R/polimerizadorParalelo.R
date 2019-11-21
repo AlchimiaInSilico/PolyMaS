@@ -16,9 +16,8 @@ PolyMaS<-function(SMILES_SRU, PD){
   cl <- makeCluster(cores)
   registerDoParallel(cl)
 
-  #probado empiricamente cantidad optima de divisiones del polimero original a los paralelos
+
   cantidadDivisiones<-ceiling(PD*0.003)
-  #balancear la cantidad de PD por core
   PDEntero<-PD%/%cantidadDivisiones
   PDResto<-PD%%cantidadDivisiones
   cantidadPD<-array(data=PDEntero,dim=cantidadDivisiones)
@@ -29,7 +28,7 @@ PolyMaS<-function(SMILES_SRU, PD){
     }
   }
 
-  #polimerizar en paralelo dividiendo por cant de cores
+    #polimerizar en paralelo dividiendo por cant de cores
     polimeros<-foreach(i=1:cantidadDivisiones, .combine='rbind', .export = 'algoritmoPolimerizacion') %dopar% {
       if(cantidadPD[i]>0)
         algoritmoPolimerizacion(SMILES_SRU, cantidadPD[i])
@@ -38,14 +37,12 @@ PolyMaS<-function(SMILES_SRU, PD){
     #el objetivo es obtener una unica cadena representando el polimero completo
     while(length(polimeros)>1){
       #tomo cada uno de los n=cores polimeros y realizo la union en paralelo de a dos polimeros
-      #para obtener aproximadamente n/2 polimeros
       polimerosCoresParseados<-foreach(i=seq(from=1, to=length(polimeros), by=2), .combine='rbind', .export = 'unionDosPolimerosEnUno') %dopar% {
         unionDosPolimerosEnUno(polimeros[i], polimeros[i+1])
       }
       polimeros<-polimerosCoresParseados
     }
 
-    #en esta instancia voy a tener un unico polimero completo
     polimero<-polimeros
     stopCluster(cl)
     return(polimero)
@@ -75,8 +72,6 @@ algoritmoPolimerizacion <-function(SMILES_SRU, n){
     # quedar? con un ?*? para la cabeza y un ?*? para la cola
     smilesGenerado<-sub("?","*",smilesGenerado, fixed=TRUE)
 
-    # se retorna el resultado
-
   }
   else{
     smilesGenerado<-SMILES_SRU
@@ -86,9 +81,7 @@ algoritmoPolimerizacion <-function(SMILES_SRU, n){
 }
 
 unionDosPolimerosEnUno<-function(polimero1, polimero2){
-  #polimero1 siempre va a ser distinto de NA
   union<-polimero1
-  #si polimero2 tambien es distinto de NA, entonces los uno
   if(!is.na(polimero2)){
     smilesGenerado<- sub("*","?", polimero1, fixed=TRUE)
     URSinAsterisco<-sub("*","", polimero2, fixed=TRUE)
@@ -96,6 +89,5 @@ unionDosPolimerosEnUno<-function(polimero1, polimero2){
     smilesGenerado<-sub("?","*",smilesGenerado, fixed=TRUE)
     union<-smilesGenerado
   }
-  #si polimero2 = NA entonces la union es polimero1
   return(union)
 }
