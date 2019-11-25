@@ -19,10 +19,12 @@ library(PolyMaS)
 
 NOTE: for "cannot open URL" error, this [guide](https://www.fnbky.com/TLS1_2TroubleShootingGuide.pdf) recommended enabling TLS 1.2
 
+```
 In the Internet Options window, click on the Advanced tab at the top of the window.
 • Scroll down to the end of the list and click in the square check boxes next to "Use TLS 1.1" and "Use
 TLS 1.2" if they don't already have a check mark in them. 
 • Press the OK button to save this change.
+```
 
 # Usage
 PolyMaS(SMILES_SRU, PD)
