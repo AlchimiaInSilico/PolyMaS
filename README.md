@@ -29,6 +29,8 @@ TLS 1.2" if they don't already have a check mark in them.
 # Usage
 PolyMaS(SMILES_SRU, PD)
 
+NOTE: it is always recommendable to verify, in a 3 SRU polymerization, that the link between the input Structural Repetitive Unit is correct
+
 # Arguments
 -In the first parameter, enter the Structural Repetitive Unit (SMILES_SRU), that is, the SMILES code string. Asterisks (*) are used as indicators of the head (the first one) and the tail (the second one). The polystyrene SRU in SMILES code is provided as an example:
 ``` *C(C*)c1ccccc1 ```
